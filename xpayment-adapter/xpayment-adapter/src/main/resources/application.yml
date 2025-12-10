@@ -1,0 +1,78 @@
+server:
+  port: ${SERVER_PORT}
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    url: ${SPRING_DATASOURCE_URL}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+  application:
+    name: xpayment-adapter
+  kafka:
+    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS}
+  rabbitmq:
+    host: ${SPRING_RABBITMQ_HOST}
+    port: ${SPRING_RABBITMQ_PORT}
+    username: ${SPRING_RABBITMQ_USERNAME}
+    password: ${SPRING_RABBITMQ_PASSWORD}
+    template:
+      receive-timeout: 2000
+
+xpayment:
+  api:
+    base-url: ${XPAYMENT_API_BASE_URL}
+    x-pay-account: ${XPAYMENT_AUTH_X_PAY_ACCOUNT}
+    token: ${XPAYMENT_TOKEN}
+  rabbit:
+    routingKey: ${RABBITMQ_ROUTING_KEY}
+  kafka:
+    topicName: ${KAFKA_TOPIC_NAME}
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
+    consumer-group-id: ${KAFKA_CONSUMER_GROUP_ID}
+    auto-offset-reset: ${KAFKA_AUTO_OFFSET_RESET}
+    trusted-packages: ${KAFKA_TRUSTED_PACKAGES}
+    value-default-type: ${KAFKA_VALUE_DEFAULT_TYPE}
+    observation:
+      observation-key: "topic"
+      observation-name: "kafka.consume"
+  mapping:
+    componentModel: ${MAPPING_COMPONENT_MODEL}
+app:
+  scheduler:
+    dlq-processing-interval: ${APP_SCHEDULER_DLQ_PROCESSING_INTERVAL:10000}
+    check-payment-status-interval: ${APP_SCHEDULER_CHECK_PAYMENT_STATUS_INTERVAL:1000}
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+  health:
+    db:
+      enabled: true
+    diskspace:
+      enabled: true
+    rabbit:
+      enabled: true
+logging:
+  pattern:
+    correlation: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [${spring.application.name}] [%X{traceId:-}] %msg [%thread, %class]%n"
+  include-application-name: false
+  level:
+    org.springframework: INFO
+    org.example.xpaymentadapter.service: INFO
+    org.example.xpaymentadapter.client.interceptor.RestClientLoggingInterceptor: TRACE
+    org.apache.kafka.clients.producer.ProducerConfig: WARN
+    org.apache.kafka.clients.consumer.ConsumerConfig: WARN

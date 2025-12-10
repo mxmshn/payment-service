@@ -1,0 +1,122 @@
+{
+  "realm": "iprody",
+  "enabled": true,
+  "registrationAllowed": false,
+  "roles": {
+    "realm": [
+      {
+        "name": "ADMIN",
+        "description": "Administrator role"
+      },
+      {
+        "name": "MANAGER",
+        "description": "Manager role"
+      },
+      {
+        "name": "TEACHER",
+        "description": "Teacher role"
+      },
+      {
+        "name": "INTERN",
+        "description": "Intern role"
+      }
+    ]
+  },
+  "groups": [
+    {
+      "name": "ADMIN_GROUP",
+      "realmRoles": ["ADMIN"]
+    },
+    {
+      "name": "MANAGER_GROUP",
+      "realmRoles": ["MANAGER"]
+    },
+    {
+      "name": "TEACHER_GROUP",
+      "realmRoles": ["TEACHER"]
+    },
+    {
+      "name": "INTERN_GROUP",
+      "realmRoles": ["INTERN"]
+    }
+  ],
+  "users": [
+    {
+      "username": "admin_user",
+      "email": "admin@iprody.ru",
+      "firstName": "Admin",
+      "lastName": "User",
+      "enabled": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "admin123",
+          "temporary": false
+        }
+      ],
+      "groups": ["ADMIN_GROUP"]
+    },
+    {
+      "username": "manager_user",
+      "email": "manager@iprody.ru",
+      "firstName": "Manager",
+      "lastName": "User",
+      "enabled": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "manager123",
+          "temporary": false
+        }
+      ],
+      "groups": ["MANAGER_GROUP"]
+    },
+    {
+      "username": "teacher_user",
+      "email": "teacher@iprody.ru",
+      "firstName": "Teacher",
+      "lastName": "User",
+      "enabled": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "teacher123",
+          "temporary": false
+        }
+      ],
+      "groups": ["TEACHER_GROUP"]
+    },
+    {
+      "username": "intern_user",
+      "email": "intern@iprody.ru",
+      "firstName": "Intern",
+      "lastName": "User",
+      "enabled": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "intern123",
+          "temporary": false
+        }
+      ],
+      "groups": ["INTERN_GROUP"]
+    }
+  ],
+  "clients": [
+    {
+      "clientId": "payment-service",
+      "name": "Payment Service",
+      "protocol": "openid-connect",
+      "enabled": true,
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": true,
+      "redirectUris": [
+        "http://localhost:8080/*",
+        "https://localhost:8443/*",
+        "http://payment-service:8080/*"
+      ],
+      "webOrigins": ["*"]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC
+        "-//Checkstyle//DTD SuppressionXpathFilter Experimental Configuration 1.2//EN"
+        "https://checkstyle.org/dtds/suppressions_1_2_xpath_experimental.dtd">
+
+<suppressions>
+    <suppress checks="HideUtilityClassConstructor" files="PaymentServiceApplication.java"/>
+    <suppress checks="FinalParametersCheck" files=".*"/>
+    <suppress checks="Javadoc" files=".*"/>
+    <suppress checks="DesignForExtension" files=".*"/>
+
+    <suppress checks="HideUtilityClassConstructor|VisibilityModifier|MemberName"
+              files=".*/constant/.*\.java"/>
+    <suppress checks="HideUtilityClassConstructor|VisibilityModifier|MemberName"
+              files=".*/mapper/.*\.java"/>
+    <suppress checks="HideUtilityClassConstructor|VisibilityModifier|MemberName"
+              files=".*/specification/.*\.java"/>
+
+</suppressions>

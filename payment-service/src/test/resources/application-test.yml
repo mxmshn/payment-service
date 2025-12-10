@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: payment-service-test
+  jpa:
+    show-sql: true
