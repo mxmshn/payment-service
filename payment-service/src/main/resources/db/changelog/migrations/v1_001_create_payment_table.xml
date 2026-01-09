@@ -6,7 +6,7 @@
 
     <changeSet id="v1_001_create_payment_table" author="Maxim Mashnin">
         <createTable tableName="payments">
-            <column name="GUID" type="uuid">
+            <column name="guid" type="uuid">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="inquiry_ref_id" type="uuid">

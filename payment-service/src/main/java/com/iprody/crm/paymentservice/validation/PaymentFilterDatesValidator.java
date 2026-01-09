@@ -4,6 +4,8 @@ import com.iprody.crm.paymentservice.dto.request.PaymentFilterRequest;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
+import java.time.LocalDateTime;
+
 public class PaymentFilterDatesValidator implements
         ConstraintValidator<ValidPaymentFilterDates, PaymentFilterRequest> {
 
@@ -13,16 +15,15 @@ public class PaymentFilterDatesValidator implements
         if (dto == null) {
             return true;
         }
-        var createdAt = dto.createdAt();
-        var createdFrom = dto.createdFrom();
-        var createdTo = dto.createdTo();
+        LocalDateTime createdAt = dto.createdAt();
+        LocalDateTime createdFrom = dto.createdFrom();
+        LocalDateTime createdTo = dto.createdTo();
         context.disableDefaultConstraintViolation();
         boolean valid = true;
 
         if (createdAt != null && (createdFrom != null || createdTo != null)) {
-            String message = """
-                    Cannot use 'createdAt' together with
-                    'createdFrom' or 'createdTo'""";
+            String message = "Cannot use 'createdAt' together with "
+                    + "'createdFrom' or 'createdTo'";
 
             context.buildConstraintViolationWithTemplate(message)
                     .addPropertyNode("createdAt")
@@ -42,5 +43,4 @@ public class PaymentFilterDatesValidator implements
         }
         return valid;
     }
-
 }

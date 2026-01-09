@@ -24,7 +24,10 @@ public class PaymentTestFactory {
                 INQUIRY_REF_ID,
                 BigDecimal.valueOf(1000),
                 "USD",
-                "Test payment");
+                "Test payment",
+                "customer",
+                UUID.randomUUID(),
+                "receipt");
     }
 
     public PaymentResponse paymentResponse() {

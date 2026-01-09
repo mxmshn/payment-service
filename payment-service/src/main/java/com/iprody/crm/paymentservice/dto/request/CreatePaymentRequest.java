@@ -1,6 +1,7 @@
 package com.iprody.crm.paymentservice.dto.request;
 
 import com.iprody.crm.paymentservice.constant.ValidationConstants;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -24,5 +25,15 @@ public record CreatePaymentRequest(
                 message = "Currency must be 3 characters long")
         String currency,
 
-        String note) {
+        String note,
+
+        @NotBlank
+        String customer,
+
+        @NotNull
+        UUID order,
+
+        @NotBlank
+        @Email
+        String receiptEmail) {
 }

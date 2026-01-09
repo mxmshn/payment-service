@@ -1,13 +1,10 @@
 package com.iprody.crm.paymentservice.api.controller;
 
 import com.iprody.crm.paymentservice.api.PaymentApi;
-import com.iprody.crm.paymentservice.config.AppConfigurationProperties;
 import com.iprody.crm.paymentservice.dto.request.CreatePaymentRequest;
 import com.iprody.crm.paymentservice.dto.request.PaymentFilterRequest;
 import com.iprody.crm.paymentservice.dto.response.PaymentResponse;
 import com.iprody.crm.paymentservice.service.PaymentService;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,19 +24,18 @@ import java.util.UUID;
 public class PaymentController implements PaymentApi {
 
     private final PaymentService paymentService;
-    private final AppConfigurationProperties configurationProperties;
 
     @Override
     @GetMapping("/{guid}")
     public ResponseEntity<PaymentResponse> findByGuid(
-            @PathVariable @NotNull UUID guid) {
+            @PathVariable UUID guid) {
         return ResponseEntity.ok(paymentService.findByGuid(guid));
     }
 
     @Override
     @PostMapping
     public ResponseEntity<PaymentResponse> createPayment(
-            @Valid CreatePaymentRequest request) {
+            CreatePaymentRequest request) {
 
         return new ResponseEntity<>(
                 paymentService.create(request),
@@ -49,7 +45,7 @@ public class PaymentController implements PaymentApi {
     @Override
     @GetMapping
     public Page<PaymentResponse> findPayments(
-            @Valid PaymentFilterRequest filter,
+            PaymentFilterRequest filter,
             Pageable pageable) {
         return paymentService.findAll(pageable, filter);
     }

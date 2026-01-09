@@ -13,6 +13,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,10 +41,18 @@ public interface PaymentApi {
                     responseCode = "400",
                     description = "Invalid input data.",
                     content = @Content(schema = @Schema(
-                            implementation = ErrorResponse.class)))
+                            implementation = ErrorResponse.class))),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Payment not found.",
+                    content = @Content(schema = @Schema(
+                            implementation = ErrorResponse.class
+                    ))
+            )
     })
     ResponseEntity<PaymentResponse> findByGuid(
-            @Parameter(description = "Payment ID", required = true) UUID guid
+            @Parameter(description = "Payment ID", required = true)
+            @NotNull UUID guid
     );
 
     @Operation(
@@ -61,7 +71,8 @@ public interface PaymentApi {
                     content = @Content(schema = @Schema(
                             implementation = ErrorResponse.class)))
     })
-    ResponseEntity<PaymentResponse> createPayment(CreatePaymentRequest req);
+    ResponseEntity<PaymentResponse> createPayment(
+            @Valid CreatePaymentRequest req);
 
     @Operation(
             summary = "Get payments in a paginated format",
@@ -117,7 +128,7 @@ public interface PaymentApi {
             )
     })
     Page<PaymentResponse> findPayments(
-            @ParameterObject
+            @ParameterObject @Valid
             PaymentFilterRequest filter,
             @Parameter(hidden = true)
             Pageable pageable);

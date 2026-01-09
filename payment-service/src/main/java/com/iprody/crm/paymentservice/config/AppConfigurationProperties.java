@@ -12,6 +12,7 @@ import java.util.List;
 public class AppConfigurationProperties {
 
     private final Pagination pagination;
+    private final Topics topics;
 
     @Getter
     @RequiredArgsConstructor
@@ -23,5 +24,14 @@ public class AppConfigurationProperties {
         private final int defaultPageSize;
         private final String defaultFieldSort;
         private final String defaultDirectionSort;
+    }
+
+    @Getter
+    @RequiredArgsConstructor
+    public static class Topics {
+
+        private final String paymentStatusUpdated;
+        private final String paymentExecutionRequest;
+        private final String paymentExecutionResponse;
     }
 }

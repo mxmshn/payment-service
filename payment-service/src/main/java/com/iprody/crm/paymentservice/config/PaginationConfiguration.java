@@ -15,10 +15,13 @@ public class PaginationConfiguration {
 
     @Bean
     public PageableHandlerMethodArgumentResolverCustomizer customizePageable() {
-        var config = appProperties.getPagination();
-        var directionSort = config.getDefaultDirectionSort().equals("ASC")
-                ? Sort.Direction.ASC
-                : Sort.Direction.DESC;
+        AppConfigurationProperties.Pagination config =
+                appProperties.getPagination();
+
+        Sort.Direction directionSort =
+                config.getDefaultDirectionSort().equals("ASC")
+                        ? Sort.Direction.ASC
+                        : Sort.Direction.DESC;
 
         return resolver -> {
             resolver.setFallbackPageable(

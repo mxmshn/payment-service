@@ -25,7 +25,7 @@ public class Payment {
 
     @Id
     @UuidGenerator(style = UuidGenerator.Style.TIME)
-    @Column(name = "GUID")
+    @Column(name = "guid")
     private UUID guid;
 
     @Column(name = "inquiry_ref_id", nullable = false)

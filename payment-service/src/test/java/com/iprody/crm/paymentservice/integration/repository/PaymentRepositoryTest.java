@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
@@ -149,9 +150,11 @@ class PaymentRepositoryTest extends BaseIntegrationTest {
                 null
         );
 
-        var pageRequest = PageRequest.of(0, 50, Sort.by("updatedAt").ascending());
+        PageRequest pageRequest = PageRequest.of(
+                0, 50, Sort.by("updatedAt").ascending());
 
-        var results = paymentRepository.findAll(PaymentSpecification.findAll(filter), pageRequest);
+        Page<Payment> results = paymentRepository
+                .findAll(PaymentSpecification.findAll(filter), pageRequest);
 
         assertAll(
                 () -> assertThat(results.getContent())

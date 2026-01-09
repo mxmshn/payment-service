@@ -4,7 +4,7 @@ import com.iprody.crm.paymentservice.dto.request.CreatePaymentRequest;
 import com.iprody.crm.paymentservice.dto.request.PaymentFilterRequest;
 import com.iprody.crm.paymentservice.dto.request.PaymentUpdateRequest;
 import com.iprody.crm.paymentservice.dto.response.PaymentResponse;
-import com.iprody.crm.paymentservice.exception.PaymentNotFoundException;
+import com.iprody.crm.paymentservice.exception.error.ResourceNotFoundException;
 import com.iprody.crm.paymentservice.factory.PaymentTestFactory;
 import com.iprody.crm.paymentservice.mapper.PaymentMapper;
 import com.iprody.crm.paymentservice.model.entity.Payment;
@@ -19,6 +19,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -44,6 +45,10 @@ class PaymentServiceImplTest {
 
     @Mock
     private Validator<Pageable> pageableValidator;
+
+
+    @Mock
+    private ApplicationEventPublisher eventPublisher;
 
     @Spy
     private PaymentMapper paymentMapper = Mappers.getMapper(PaymentMapper.class);
@@ -98,7 +103,7 @@ class PaymentServiceImplTest {
 
         when(paymentRepository.findById(guid)).thenReturn(Optional.empty());
 
-        assertThrows(PaymentNotFoundException.class, () -> paymentService.update(guid, updateRequest));
+        assertThrows(ResourceNotFoundException.class, () -> paymentService.update(guid, updateRequest));
     }
 
     @Test
@@ -120,7 +125,7 @@ class PaymentServiceImplTest {
     void findByGuid_WhenNotFound_ShouldThrow() {
         UUID guid = UUID.randomUUID();
         when(paymentRepository.findById(guid)).thenReturn(Optional.empty());
-        assertThrows(PaymentNotFoundException.class, () -> paymentService.findByGuid(guid));
+        assertThrows(ResourceNotFoundException.class, () -> paymentService.findByGuid(guid));
     }
 
     @Test
